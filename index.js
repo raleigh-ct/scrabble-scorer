@@ -44,18 +44,21 @@ Enter 0, 1, or 2: `);
 /* ***** Code your runProgram function here: ***** */
 
 function runProgram(scoreArr) {
+  // Assign variable to scoring array
   let scoreOpt = initialPrompt();
+  // loop until valid array entry received
   while (scoreOpt !== '0' && scoreOpt !== '1' && scoreOpt !== '2') {
     scoreOpt = input.question("\n" + `Invalid response. Enter 0, 1, or 2: `);
   } 
-
+// acknowledge valid selection
   console.log("\n" + "Using algorithm: " + scoreArr[scoreOpt].name);
   
  let word = '';
   
+  //loop input for word looking for insensitive STOP
   while (word.toLowerCase() !== 'stop') {
   word = input.question("\n" + "Enter a word to be scored or 'Stop' to quit: ");
-  
+  //if anything other than STOP, use word as variable for scoring function 
   if (word.toLowerCase() !== 'stop') {
     console.log(`Score for '${word}': ${scoreArr[scoreOpt].scoreFunction(word)}
   `);
