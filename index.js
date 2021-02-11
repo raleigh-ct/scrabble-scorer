@@ -27,18 +27,45 @@ return newObject;
 
 /* ***** Code your initialPrompt function here: ***** */
 
-// let initialPrompt = input.question(`Welcome to the Scrabble score calculator!
+function initialPrompt() {
+  return input.question(`Welcome to the Scrabble score calculator!
 
-// Which scoring algorithm would you like to use?
+Which scoring algorithm would you like to use?
 
-// 0 - Scrabble: The traditional scoring algorithm.
-// 1 - Simple Score: Each letter is worth 1 point.
-// 2 - Bonus Vowels: Vowels are worth 3 pts, and consonants are 1 pt.
+0 - Scrabble: The traditional scoring algorithm.
+1 - Simple Score: Each letter is worth 1 point.
+2 - Bonus Vowels: Vowels are worth 3 pts, and consonants are 1 pt.
 
-// Enter 0, 1, or 2: `);
+Enter 0, 1, or 2: `);
+}
 
+// console.log(initialPrompt());
 
 /* ***** Code your runProgram function here: ***** */
+
+function runProgram(scoreArr) {
+  let scoreOpt = initialPrompt();
+  while (scoreOpt !== '0' && scoreOpt !== '1' && scoreOpt !== '2') {
+    scoreOpt = input.question("\n" + `Invalid response. Enter 0, 1, or 2: `);
+  } 
+
+  console.log("\n" + "Using algorithm: " + scoreArr[scoreOpt].name);
+  let word;
+
+ 
+  
+  while (word !== 'Stop') {
+  word = input.question("\n" + "Enter a word to be scored or 'Stop' to quit: ");
+  
+  if (word !== 'Stop') {
+    console.log(`Score for '${word}': ${scoreArr[scoreOpt].scoreFunction(word)}
+  `);
+  } else {
+    console.log("\n" + `Thanks for using Scrabble score calculator!`);
+  }
+  }
+}
+
 
 
 // Here is the oldPointStructure object:
@@ -64,14 +91,32 @@ newPointStructure = transform(oldPointStructure);
 
 
 /* ***** Create your scoringAlgorithms array here: ***** */
+let simpleScoreObj = {
+  name: "Simple Score",
+  description: "Each letter is worth 1 point.",
+  scoreFunction: function(word) {return simpleScore(word)}
+};
+
+let bonusVowelsObj = {
+  name: "Bonus Vowels",
+  description: "Vowels are 3 pts, consonants are 1 pt.",
+  scoreFunction: function(word) {return bonusVowels(word)}
+};
+
+let scrabbleScoreObj = {
+  name: "Scrabble",
+  description: "The traditional scoring algorithm",
+  scoreFunction: function(word) {return scrabbleScore(word)}
+};
+
+let scoringAlgorithms = [scrabbleScoreObj, simpleScoreObj, bonusVowelsObj];
+
+// test object property types
+// console.log(scrabbleScoreObj);
+// console.log("algorithm name: ", scoringAlgorithms[2].name);
+// console.log("scoreFunction result: ", scoringAlgorithms[2].scoreFunction("JavaScript", newPointStructure));
 
 
-
-
-
-
-
-let scoringAlgorithms = [scrabbleScoreObj, simpleScoreObj, simpleScoreObj];
 
 
 function simpleScore(word) {
@@ -104,7 +149,7 @@ function bonusVowels(word) {
   // loop through each letter and return 2 for vowel
   for (i=0; i<word.length; i++) {
     if (word[i].includes('a') || word[i].includes('e') || word[i].includes('i')|| word[i].includes('o')|| word[i].includes('u')) {
-      bwScore += 2;
+      bwScore += 3;
       // else return 1 (as everything else should be consonant)
     } else if (word[i].includes(' ')) {
       bwScore += 0;
@@ -115,7 +160,7 @@ function bonusVowels(word) {
 }return Number(bwScore);
 }
 
-// test 'elePhant a' should equal 13
+// test 'elePhant a' should equal 17
 // console.log(bonusVowels('ElEphanT A'));
 
 function scrabbleScore(word) {
@@ -139,29 +184,13 @@ function scrabbleScore(word) {
 }
 
 
-let simpleScoreObj = {
-  name: "Simple Score",
-  description: "Each letter is worth 1 point.",
-  scoreFunction: simpleScore(word)
-};
-
-let bonusVowelsObj = {
-  name: "Bonus Vowels",
-  description: "Vowels are 3 pts, consonants are 1 pt.",
-  scoreFunction: bonusVowels(word)
-};
-
-let scrabbleScoreObj = {
-  name: "Scrabble",
-  description: "The traditional scoring algorithm",
-  scoreFunction: scrabbleScore(word)
-};
-
 
 
 // test 'KaYaK TeSt' should equal 20
 // console.log(scrabbleScore('KaYaK TeSt'));
 
-console.log("algorithm name: ", scoringAlgorithms[0].name);
+
 
 /* ***** Call the runProgram function here: ***** */
+
+console.log(runProgram(scoringAlgorithms));
