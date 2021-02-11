@@ -50,20 +50,19 @@ function runProgram(scoreArr) {
   } 
 
   console.log("\n" + "Using algorithm: " + scoreArr[scoreOpt].name);
-  let word;
-
- 
   
-  while (word !== 'Stop') {
+ let word = '';
+  
+  while (word.toLowerCase() !== 'stop') {
   word = input.question("\n" + "Enter a word to be scored or 'Stop' to quit: ");
   
-  if (word !== 'Stop') {
+  if (word.toLowerCase() !== 'stop') {
     console.log(`Score for '${word}': ${scoreArr[scoreOpt].scoreFunction(word)}
   `);
   } else {
-    console.log("\n" + `Thanks for using Scrabble score calculator!`);
+    console.log("\n" + `Thanks for using the Scrabble score calculator!`);
   }
-  }
+  } return '';
 }
 
 
